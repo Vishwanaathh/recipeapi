@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Recipe API</h1>
+
+    <h2>Fetch Recipe</h2>
+    <input type="text" id="fetchName" placeholder="Enter recipe name" />
+    <button id="fetchButton">Fetch Recipe</button>
+    <pre id="fetchResult"></pre>
+
+    <h2>Create Recipe</h2>
+    <input type="text" id="recipeName" placeholder="Recipe Name" required />
+    <input type="text" id="ingredients" placeholder="Ingredients" required />
+    <input type="text" id="instructions" placeholder="Instructions" required />
+    <button id="createButton">Create Recipe</button>
+    <pre id="createResult"></pre>
+
+    <script>
+        // Fetch a recipe by name
+        document.getElementById('fetchButton').addEventListener('click', async () => {
+            const name = document.getElementById('fetchName').value;
+            const response = await fetch(`https://recipeapi-kappa.vercel.app/${name}`);
+            const result = await response.json();
+            document.getElementById('fetchResult').textContent = JSON.stringify(result, null, 2);
+        });
+
+        // Create a new recipe
+        document.getElementById('createButton').addEventListener('click', async () => {
+            const name = document.getElementById('recipeName').value;
+            const ingredients = document.getElementById('ingredients').value;
+            const instructions = document.getElementById('instructions').value;
+
+            const response = await fetch('https://recipeapi-kappa.vercel.app/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, ingredients, instructions })
+            });
+
+            const result = await response.json();
+            document.getElementById('createResult').textContent = JSON.stringify(result, null, 2);
+        });
+    </script>
+
+</body>
+</html>
