@@ -22,7 +22,7 @@ app.post('/create',async(req,res)=>{
     res.send("created");
 
 });
-mongoose.connect(process.env.URL)
+mongoose.connect("mongodb+srv://admin:root@cluster0.mtdfqct.mongodb.net/RECIPES?retryWrites=true&w=majority&appName=Cluster")
 .then(
 app.listen(6969,()=>{
     console.log("app is running");
